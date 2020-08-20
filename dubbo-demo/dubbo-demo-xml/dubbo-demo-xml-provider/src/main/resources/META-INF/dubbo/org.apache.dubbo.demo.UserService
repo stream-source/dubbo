@@ -1,0 +1,2 @@
+general=org.apache.dubbo.demo.provider.impl.GeneralServiceImpl
+member=org.apache.dubbo.demo.provider.impl.MemberServiceImpl

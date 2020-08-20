@@ -16,12 +16,28 @@
  */
 package org.apache.dubbo.demo.provider;
 
+import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.extension.ExtensionLoader;
+import org.apache.dubbo.demo.AdaptiveService;
+import org.apache.dubbo.demo.UserService;
+import org.apache.dubbo.demo.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class Application {
+import java.util.List;
+
+public class ProviderApplication {
     public static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-provider.xml");
         context.start();
+//        String spiKey = "true";
+//        ExtensionLoader<UserService> extensionLoader = ExtensionLoader.getExtensionLoader(UserService.class);
+//        UserService extension = extensionLoader.getExtension(spiKey);
+//        System.out.println(extension.getUserAddressList().get(0).getUserAddress());
+
+        ExtensionLoader<AdaptiveService> extensionLoader = ExtensionLoader.getExtensionLoader(AdaptiveService.class);
+        AdaptiveService adaptiveExtension = extensionLoader.getAdaptiveExtension();
+        URL url = URL.valueOf("http://localhost/testAdaptive");
+        adaptiveExtension.echo("adaptive", url);
         System.in.read();
     }
 }

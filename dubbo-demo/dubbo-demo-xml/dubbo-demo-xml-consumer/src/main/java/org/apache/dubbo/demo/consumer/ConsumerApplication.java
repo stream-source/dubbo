@@ -16,22 +16,29 @@
  */
 package org.apache.dubbo.demo.consumer;
 
+import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.apache.dubbo.demo.DemoService;
 
+import org.apache.dubbo.demo.OrderService;
+import org.apache.dubbo.demo.UserService;
+import org.apache.dubbo.rpc.Protocol;
+import org.apache.dubbo.rpc.ProtocolServer;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class Application {
+public class ConsumerApplication {
     /**
      * In order to make sure multicast registry works, need to specify '-Djava.net.preferIPv4Stack=true' before
      * launch the application
      */
     public static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
-        context.start();
-        DemoService demoService = context.getBean("demoService", DemoService.class);
-        CompletableFuture<String> hello = demoService.sayHelloAsync("world");
-        System.out.println("result: " + hello.get());
+        OrderService orderService = context.getBean(OrderService.class);
+        orderService.getUserAddressBySpi("member");
+        System.out.println("调用完成");
+        System.in.read();
+
     }
 }
