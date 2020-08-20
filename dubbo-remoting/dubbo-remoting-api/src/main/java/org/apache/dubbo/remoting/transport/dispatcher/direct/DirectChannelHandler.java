@@ -37,6 +37,7 @@ public class DirectChannelHandler extends WrappedChannelHandler {
     @Override
     public void received(Channel channel, Object message) throws RemotingException {
         ExecutorService executor = getPreferredExecutorService(message);
+        //线程实例为ThreadlessExecutor，分发线程池
         if (executor instanceof ThreadlessExecutor) {
             try {
                 executor.execute(new ChannelEventRunnable(channel, handler, ChannelState.RECEIVED, message));
@@ -44,6 +45,7 @@ public class DirectChannelHandler extends WrappedChannelHandler {
                 throw new ExecutionException(message, channel, getClass() + " error when process received event .", t);
             }
         } else {
+            //直接处理消息
             handler.received(channel, message);
         }
     }

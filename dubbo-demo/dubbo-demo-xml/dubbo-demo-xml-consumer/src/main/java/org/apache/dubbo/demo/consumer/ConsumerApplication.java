@@ -36,7 +36,8 @@ public class ConsumerApplication {
     public static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
         OrderService orderService = context.getBean(OrderService.class);
-        orderService.getUserAddressBySpi("member");
+        orderService.getUserAddressList();
+//        orderService.getUserAddressBySpi("member");
         System.out.println("调用完成");
         System.in.read();
 

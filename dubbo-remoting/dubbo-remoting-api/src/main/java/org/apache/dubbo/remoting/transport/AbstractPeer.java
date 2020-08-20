@@ -25,6 +25,7 @@ import org.apache.dubbo.remoting.RemotingException;
 
 /**
  * AbstractPeer
+ * 实现ChannelHandler接口，并设置接口对象，装饰着模式
  */
 public abstract class AbstractPeer implements Endpoint, ChannelHandler {
 
@@ -50,6 +51,10 @@ public abstract class AbstractPeer implements Endpoint, ChannelHandler {
 
     @Override
     public void send(Object message) throws RemotingException {
+        /**
+         * 1.sent=true:等待消息发出，消息发送失败抛异常；
+         * 2.sent=false:不等待消息发出，将消息放在IO队列中，即可返回
+         */
         send(message, url.getParameter(Constants.SENT_KEY, false));
     }
 

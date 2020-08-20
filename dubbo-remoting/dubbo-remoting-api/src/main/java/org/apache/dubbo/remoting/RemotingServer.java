@@ -32,21 +32,21 @@ public interface RemotingServer extends Endpoint, Resetable, IdleSensible {
 
     /**
      * is bound.
-     *
+     *判断服务器绑定本地端口，即服务器是否启动成功，能够支持连接、接收消息等
      * @return bound
      */
     boolean isBound();
 
     /**
      * get channels.
-     *
+     *获取该服务器的通道列表
      * @return channels
      */
     Collection<Channel> getChannels();
 
     /**
      * get channel.
-     *
+     *获取指定远程地址对应的通道
      * @param remoteAddress
      * @return channel
      */

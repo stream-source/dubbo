@@ -45,16 +45,28 @@ import static org.apache.dubbo.remoting.Constants.IDLE_TIMEOUT_KEY;
  */
 public abstract class AbstractServer extends AbstractEndpoint implements RemotingServer {
 
+    //服务器线程名称
     protected static final String SERVER_THREAD_POOL_NAME = "DubboServerHandler";
     private static final Logger logger = LoggerFactory.getLogger(AbstractServer.class);
+    //线程池
     ExecutorService executor;
+    //服务器地址：本地地址
     private InetSocketAddress localAddress;
+    //绑定地址
     private InetSocketAddress bindAddress;
+    //最大可接受的连接数
     private int accepts;
+    //空闲超时时间：默认秒s
     private int idleTimeout;
 
     private ExecutorRepository executorRepository = ExtensionLoader.getExtensionLoader(ExecutorRepository.class).getDefaultExtension();
 
+    /**
+     * 构造方法，从URL中获取本地地址、IP、端口、最大可接受连接数、空闲超时时间等配置
+     * @param url
+     * @param handler
+     * @throws RemotingException
+     */
     public AbstractServer(URL url, ChannelHandler handler) throws RemotingException {
         super(url, handler);
         localAddress = getUrl().toInetSocketAddress();
@@ -68,6 +80,7 @@ public abstract class AbstractServer extends AbstractEndpoint implements Remotin
         this.accepts = url.getParameter(ACCEPTS_KEY, DEFAULT_ACCEPTS);
         this.idleTimeout = url.getParameter(IDLE_TIMEOUT_KEY, DEFAULT_IDLE_TIMEOUT);
         try {
+            //开启服务器
             doOpen();
             if (logger.isInfoEnabled()) {
                 logger.info("Start " + getClass().getSimpleName() + " bind " + getBindAddress() + ", export " + getLocalAddress());
@@ -76,6 +89,7 @@ public abstract class AbstractServer extends AbstractEndpoint implements Remotin
             throw new RemotingException(url.toInetSocketAddress(), null, "Failed to bind " + getClass().getSimpleName()
                     + " on " + getLocalAddress() + ", cause: " + t.getMessage(), t);
         }
+        //创建线程池
         executor = executorRepository.createExecutorIfAbsent(url);
     }
 
@@ -83,6 +97,10 @@ public abstract class AbstractServer extends AbstractEndpoint implements Remotin
 
     protected abstract void doClose() throws Throwable;
 
+    /**
+     * 重置配置信息：最大可接受连接数、空闲超时时间、更新线程池配置
+     * @param url
+     */
     @Override
     public void reset(URL url) {
         if (url == null) {
@@ -108,7 +126,9 @@ public abstract class AbstractServer extends AbstractEndpoint implements Remotin
         } catch (Throwable t) {
             logger.error(t.getMessage(), t);
         }
+        //更新线程池
         executorRepository.updateThreadpool(url, executor);
+        //重置URL
         super.setUrl(getUrl().addParameters(url.getParameters()));
     }
 

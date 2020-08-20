@@ -24,6 +24,11 @@ import org.apache.dubbo.remoting.transport.ChannelHandlerDispatcher;
 
 /**
  * Transporter facade. (API, Static, ThreadSafe)
+ * 1.该类使用了外观模式：通过该类的包装，外部调用者看不到内部具体的实现细节，降低程序的复杂度，提高程序的可维护性。
+ * 比如此类，包装调用了各种实现Transporter接口的方法，通过getTransporter方法获取Transporter的实现对象，
+ * 具体实现哪个实现类，取决于url中携带的配置信息，如果url中没有相应的配置，则默认选择@SPI中的默认值netty。
+ *2。 bind和connect方法分别有两个重载方法，其中的操作只是把把字符串的url转化为URL对象。
+ * 3.静态代码块中检测了一下jar包是否有重复。
  */
 public class Transporters {
 

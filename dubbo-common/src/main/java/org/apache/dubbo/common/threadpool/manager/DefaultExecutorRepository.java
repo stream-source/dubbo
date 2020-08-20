@@ -116,14 +116,22 @@ public class DefaultExecutorRepository implements ExecutorRepository {
         return executor;
     }
 
+    /**
+     * 根据URL配置线程池
+     * @param url
+     * @param executor
+     */
     @Override
     public void updateThreadpool(URL url, ExecutorService executor) {
         try {
             if (url.hasParameter(THREADS_KEY)
                     && executor instanceof ThreadPoolExecutor && !executor.isShutdown()) {
                 ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executor;
+                //获取URL中的线程数
                 int threads = url.getParameter(THREADS_KEY, 0);
+                //获取线程池最大线程数
                 int max = threadPoolExecutor.getMaximumPoolSize();
+                //获取线程池核心线程数
                 int core = threadPoolExecutor.getCorePoolSize();
                 if (threads > 0 && (threads != max || threads != core)) {
                     if (threads < core) {

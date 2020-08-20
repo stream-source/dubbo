@@ -30,19 +30,20 @@ import java.util.List;
  * <a href="http://en.wikipedia.org/wiki/Directory_service">Directory Service</a>
  *
  * @see org.apache.dubbo.rpc.cluster.Cluster#join(Directory)
+ * 目录服务：提供了获取服务者地址列表的功能（注册中心目录服务；静态目录服务）
  */
 public interface Directory<T> extends Node {
 
     /**
      * get service type.
-     *
+     *返回服务的接口类
      * @return service type.
      */
     Class<T> getInterface();
 
     /**
      * list invokers.
-     *
+     *获取服务地址列表的方法
      * @return invokers
      */
     List<Invoker<T>> list(Invocation invocation) throws RpcException;

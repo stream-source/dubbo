@@ -22,7 +22,9 @@ import org.apache.dubbo.rpc.cluster.support.wrapper.AbstractCluster;
 
 /**
  * {@link FailoverClusterInvoker}
- *
+ *集群类型：失败时自动切换；
+ * 调用失败时自动切换重连其他服务器；
+ * 通常适用于读场景，但重试会带来更长延迟。可通过retries="2"来设置重试次数(不含第一次)。
  */
 public class FailoverCluster extends AbstractCluster {
 

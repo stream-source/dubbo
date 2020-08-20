@@ -39,7 +39,7 @@ public interface Endpoint {
 
     /**
      * get channel handler.
-     *
+     *获取该端的通道处理器
      * @return channel handler
      */
     ChannelHandler getChannelHandler();
@@ -61,7 +61,7 @@ public interface Endpoint {
 
     /**
      * send message.
-     *
+     *发送消息，sent用于标识消息是否已经发送
      * @param message
      * @param sent    already sent to socket?
      */
@@ -74,6 +74,7 @@ public interface Endpoint {
 
     /**
      * Graceful close the channel.
+     * 优雅地关闭通道，即设置等待时间
      */
     void close(int timeout);
 

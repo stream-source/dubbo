@@ -44,23 +44,28 @@ import static org.apache.dubbo.common.constants.CommonConstants.THREADPOOL_KEY;
  */
 public abstract class AbstractClient extends AbstractEndpoint implements Client {
 
+    //客户端线程池名字
     protected static final String CLIENT_THREAD_POOL_NAME = "DubboClientHandler";
     private static final Logger logger = LoggerFactory.getLogger(AbstractClient.class);
     private final Lock connectLock = new ReentrantLock();
+    //是否需要重连
     private final boolean needReconnect;
     protected volatile ExecutorService executor;
+    //获取默认线程池
     private ExecutorRepository executorRepository = ExtensionLoader.getExtensionLoader(ExecutorRepository.class).getDefaultExtension();
 
     public AbstractClient(URL url, ChannelHandler handler) throws RemotingException {
         super(url, handler);
-
+        //从URL获取是否重连，默认false
         needReconnect = url.getParameter(Constants.SEND_RECONNECT_KEY, false);
-
+        //初始化线程
         initExecutor(url);
 
         try {
+            //开启客户端
             doOpen();
         } catch (Throwable t) {
+            //出现异常，则关闭
             close();
             throw new RemotingException(url.toInetSocketAddress(), null,
                     "Failed to start " + getClass().getSimpleName() + " " + NetUtils.getLocalAddress()
@@ -88,6 +93,10 @@ public abstract class AbstractClient extends AbstractEndpoint implements Client 
         }
     }
 
+    /**
+     * 设置线程名称和线程池类型：可缓存线程池
+     * @param url
+     */
     private void initExecutor(URL url) {
         url = ExecutorUtil.setThreadName(url, CLIENT_THREAD_POOL_NAME);
         url = url.addParameterIfAbsent(THREADPOOL_KEY, DEFAULT_CLIENT_THREADPOOL);
@@ -95,6 +104,7 @@ public abstract class AbstractClient extends AbstractEndpoint implements Client 
     }
 
     protected static ChannelHandler wrapChannelHandler(URL url, ChannelHandler handler) {
+        //包装channel处理器
         return ChannelHandlers.wrap(handler, url);
     }
 

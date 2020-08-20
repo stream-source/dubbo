@@ -42,6 +42,11 @@ import static org.apache.dubbo.remoting.utils.UrlUtils.getIdleTimeout;
 
 /**
  * DefaultMessageClient
+ * 该类主要的作用就是增加了心跳功能，为什么要增加心跳功能呢？？
+ * 对于长连接，一些拔网线等物理层的断开，会导致TCP的FIN消息来不及发送，对方收不到断开事件，
+ * 那么就需要用到发送心跳包来检测连接是否断开。
+ * consumer和provider断开，处理措施不一样，会分别做出重连和关闭通道的操作。
+ *
  */
 public class HeaderExchangeClient implements ExchangeClient {
 

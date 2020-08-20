@@ -37,7 +37,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.DEFAULT_TIMEOUT;
 import static org.apache.dubbo.common.constants.CommonConstants.TIMEOUT_KEY;
 
 /**
- * ExchangeReceiver
+ * ExchangeReceiver，该类是Channel的装饰器
  */
 final class HeaderExchangeChannel implements ExchangeChannel {
 
@@ -89,16 +89,20 @@ final class HeaderExchangeChannel implements ExchangeChannel {
 
     @Override
     public void send(Object message, boolean sent) throws RemotingException {
+        //通道关闭，抛异常
         if (closed) {
             throw new RemotingException(this.getLocalAddress(), null, "Failed to send message " + message + ", cause: The channel " + this + " is closed!");
         }
+        //判断消息类型
         if (message instanceof Request
                 || message instanceof Response
                 || message instanceof String) {
             channel.send(message, sent);
         } else {
+            //创建request请求
             Request request = new Request();
             request.setVersion(Version.getProtocolVersion());
+            //设置是否需要响应
             request.setTwoWay(false);
             request.setData(message);
             channel.send(request, sent);

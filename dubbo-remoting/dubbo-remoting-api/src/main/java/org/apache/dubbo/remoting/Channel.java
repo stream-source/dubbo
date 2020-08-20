@@ -36,14 +36,14 @@ public interface Channel extends Endpoint {
 
     /**
      * is connected.
-     *
+     *判断通道是否连接
      * @return connected
      */
     boolean isConnected();
 
     /**
      * has attribute.
-     *
+     *判断指定key是否有值
      * @param key key.
      * @return has or has not.
      */

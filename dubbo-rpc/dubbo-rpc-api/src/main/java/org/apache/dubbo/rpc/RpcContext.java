@@ -46,7 +46,8 @@ import static org.apache.dubbo.rpc.Constants.RETURN_KEY;
  * Note: RpcContext is a temporary state holder. States in RpcContext changes every time when request is sent or received.
  * For example: A invokes B, then B invokes C. On service B, RpcContext saves invocation info from A to B before B
  * starts invoking C, and saves invocation info from B to C after B invokes C.
- *
+ *远程调用的上下文，贯穿整个调用过程；
+ * RPCContext保存调用信息
  * @export
  * @see org.apache.dubbo.rpc.filter.ContextFilter
  */

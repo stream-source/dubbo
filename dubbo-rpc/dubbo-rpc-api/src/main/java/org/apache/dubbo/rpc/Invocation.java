@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 /**
  * Invocation. (API, Prototype, NonThreadSafe)
- *
+ *会话域，持有调用过程的变量
  * @serial Don't change the class name and package name.
  * @see org.apache.dubbo.rpc.Invoker#invoke(Invocation)
  * @see org.apache.dubbo.rpc.RpcInvocation

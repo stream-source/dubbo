@@ -23,7 +23,7 @@ import org.apache.dubbo.rpc.cluster.Directory;
 
 /**
  * AvailableCluster
- *
+ *获取可用的服务方：遍历所有Invokers通过invoker.isAvalible判断服务端是否活着，只要一个有为true，直接调用返回，不管成不成功。
  */
 public class AvailableCluster implements Cluster {
 

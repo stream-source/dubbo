@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * ExchangeChannel. (API/SPI, Prototype, ThreadSafe)
+ * 信息交换通道
  */
 public interface ExchangeChannel extends Channel {
 
@@ -69,7 +70,7 @@ public interface ExchangeChannel extends Channel {
 
     /**
      * get message handler.
-     *
+     *获取消息交换处理器
      * @return message handler
      */
     ExchangeHandler getExchangeHandler();
