@@ -12,9 +12,10 @@ import java.util.List;
 public abstract class AbstractUserService implements UserService {
 
     @Override
-    public UserService getUserServiceByLoader(String spiKey) {
+    public List<User> getUserServiceByLoader(String spiKey) {
        ExtensionLoader<UserService> extensionLoader = ExtensionLoader.getExtensionLoader(UserService.class);
-       return extensionLoader.getExtension(spiKey);
+        UserService userService = extensionLoader.getExtension(spiKey);
+        return userService.getUserAddressList();
     }
 
 }

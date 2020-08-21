@@ -13,6 +13,12 @@ public class MemberServiceImpl extends AbstractUserService implements UserServic
     @Override
     public List<User> getUserAddressList() {
         List<User> userList = new LinkedList<>();
+        System.out.println("请求+1......");
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < 2; i++) {
             User user = new User();
             user.setUserLevel("member");

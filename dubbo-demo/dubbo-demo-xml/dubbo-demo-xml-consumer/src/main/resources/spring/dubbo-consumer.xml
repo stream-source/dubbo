@@ -14,6 +14,9 @@
 
     <dubbo:registry address="zookeeper://120.55.195.153:2181" timeout="80000"/>
     <!--引用暴露的接口-->
-    <dubbo:reference id="userService" check="false" interface="org.apache.dubbo.demo.UserService"/>
+    <dubbo:reference id="userService" check="false" interface="org.apache.dubbo.demo.UserService">
+        <dubbo:method name="getUserAddressList" timeout="2000"/>
+    </dubbo:reference>
+
 
 </beans>

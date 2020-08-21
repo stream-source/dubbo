@@ -14,10 +14,9 @@
     <context:component-scan base-package="org.apache.dubbo.demo.provider"/>
     <dubbo:registry address="zookeeper://120.55.195.153:2181" timeout="10000"/>
 
-    <dubbo:protocol name="dubbo"/>
+    <dubbo:protocol name="dubbo" port="20881"/>
 
-<!--    <bean id="MemberServiceImpl" class="org.apache.dubbo.demo.provider.impl.MemberServiceImpl"/>-->
-
-<!--    <dubbo:service interface="org.apache.dubbo.demo.UserService" ref="memberServiceImpl"/>-->
-<!--    <dubbo:service interface="org.apache.dubbo.demo.UserService" ref="generalServiceImpl"/>-->
+    <!--暴露服务接口:多个服务接口实现类，均需要暴露-->
+    <dubbo:service interface="org.apache.dubbo.demo.UserService" ref="memberServiceImpl" timeout="5000" retries="2"/>
+    <dubbo:service interface="org.apache.dubbo.demo.UserService" ref="generalServiceImpl"/>
 </beans>

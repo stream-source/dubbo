@@ -9,5 +9,5 @@ public interface UserService {
 
     List<User> getUserAddressList();
 
-    UserService getUserServiceByLoader(String spiKey);
+    List<User> getUserServiceByLoader(String spiKey);
 }

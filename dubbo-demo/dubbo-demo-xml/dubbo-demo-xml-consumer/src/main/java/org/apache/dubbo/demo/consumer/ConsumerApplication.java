@@ -35,8 +35,8 @@ public class ConsumerApplication {
      * launch the application
      */
     public static void main(String[] args) throws Exception {
-       consumerMainTest();
-
+//       consumerMainTest();
+        consumerSpiTest();
     }
 
     private static void consumerMainTest() throws IOException {
@@ -55,7 +55,7 @@ public class ConsumerApplication {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
         OrderService orderService = context.getBean(OrderService.class);
         orderService.getUserAddressList();
-        orderService.getUserAddressBySpi("member");
+        orderService.getUserAddressBySpi("general");
         System.out.println("调用完成");
         System.in.read();
     }

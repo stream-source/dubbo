@@ -27,8 +27,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void getUserAddressBySpi(String spiKey) {
-        UserService userService = this.userService.getUserServiceByLoader(spiKey);
-        List<User> userAddressList = userService.getUserAddressList();
+        List<User> userAddressList = userService.getUserServiceByLoader(spiKey);
         for (User user : userAddressList) {
             System.out.println("level:" + user.getUserLevel() + " address:" + user.getUserAddress());
         }
