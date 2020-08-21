@@ -23,17 +23,40 @@ import org.apache.dubbo.demo.UserService;
 import org.apache.dubbo.demo.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ProviderApplication {
     public static void main(String[] args) throws Exception {
+        providerMainTest();
+    }
+
+    private static void providerMainTest() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-provider.xml");
         context.start();
-//        String spiKey = "true";
-//        ExtensionLoader<UserService> extensionLoader = ExtensionLoader.getExtensionLoader(UserService.class);
-//        UserService extension = extensionLoader.getExtension(spiKey);
-//        System.out.println(extension.getUserAddressList().get(0).getUserAddress());
+        System.in.read();
+    }
 
+    /**
+     * SPI接口调用方式
+     */
+    private static void providerSpiTest() throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-provider.xml");
+        context.start();
+        String spiKey = "true";
+        ExtensionLoader<UserService> extensionLoader = ExtensionLoader.getExtensionLoader(UserService.class);
+        UserService extension = extensionLoader.getExtension(spiKey);
+        System.out.println(extension.getUserAddressList().get(0).getUserAddress());
+        System.in.read();
+    }
+
+    /**
+     * adaptive机制 TODO
+     * @throws IOException
+     */
+    private static void providerAdaptiveTest() throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-provider.xml");
+        context.start();
         ExtensionLoader<AdaptiveService> extensionLoader = ExtensionLoader.getExtensionLoader(AdaptiveService.class);
         AdaptiveService adaptiveExtension = extensionLoader.getAdaptiveExtension();
         URL url = URL.valueOf("http://localhost/testAdaptive");

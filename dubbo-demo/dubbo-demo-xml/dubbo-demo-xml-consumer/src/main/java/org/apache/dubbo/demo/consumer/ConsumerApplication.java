@@ -25,6 +25,7 @@ import org.apache.dubbo.rpc.Protocol;
 import org.apache.dubbo.rpc.ProtocolServer;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -34,12 +35,28 @@ public class ConsumerApplication {
      * launch the application
      */
     public static void main(String[] args) throws Exception {
+       consumerMainTest();
+
+    }
+
+    private static void consumerMainTest() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
         OrderService orderService = context.getBean(OrderService.class);
         orderService.getUserAddressList();
-//        orderService.getUserAddressBySpi("member");
         System.out.println("调用完成");
         System.in.read();
+    }
 
+    /**
+     * spi方式远程调用，暂时未实现
+     * @throws IOException
+     */
+    private static void consumerSpiTest() throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
+        OrderService orderService = context.getBean(OrderService.class);
+        orderService.getUserAddressList();
+        orderService.getUserAddressBySpi("member");
+        System.out.println("调用完成");
+        System.in.read();
     }
 }
