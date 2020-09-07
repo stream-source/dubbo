@@ -16,18 +16,11 @@
  */
 package org.apache.dubbo.demo.consumer;
 
-import org.apache.dubbo.common.extension.ExtensionLoader;
-import org.apache.dubbo.demo.DemoService;
-
 import org.apache.dubbo.demo.OrderService;
-import org.apache.dubbo.demo.UserService;
-import org.apache.dubbo.rpc.Protocol;
-import org.apache.dubbo.rpc.ProtocolServer;
+import org.apache.dubbo.demo.stub.UserService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class ConsumerApplication {
     /**
@@ -35,8 +28,7 @@ public class ConsumerApplication {
      * launch the application
      */
     public static void main(String[] args) throws Exception {
-//       consumerMainTest();
-        consumerSpiTest();
+        stubTest();
     }
 
     private static void consumerMainTest() throws IOException {
@@ -58,5 +50,13 @@ public class ConsumerApplication {
         orderService.getUserAddressBySpi("general");
         System.out.println("调用完成");
         System.in.read();
+    }
+
+    private static void stubTest() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/stub-consumer.xml");
+        UserService stubService = context.getBean(UserService.class);
+        String userName = stubService.getUserName("1503891");
+        System.out.println(userName);
+
     }
 }

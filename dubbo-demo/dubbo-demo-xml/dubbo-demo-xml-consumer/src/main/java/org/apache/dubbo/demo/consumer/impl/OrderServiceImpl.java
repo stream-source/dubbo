@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 使用注解注入类，由于不是springBoot项目，则需要xml配置文件处理包扫描路径
  */
-@Service
+//@Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
