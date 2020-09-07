@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application metadata-type="remote" name="user-provider"/>
+    <!--由于服务提供者需要暴露服务接口实现，自动注入容器中，则无须包扫描-->
+    <context:component-scan base-package="org.apache.dubbo.demo.provider"/>
+    <dubbo:registry address="zookeeper://120.55.195.153:2181" timeout="10000"/>
+
+    <dubbo:protocol name="dubbo" port="20881"/>
+    <!--暴露服务-->
+    <dubbo:service interface="org.apache.dubbo.demo.stub.UserService" stub="true"
+                   ref="userProviderStubServiceImpl"/>
+</beans>

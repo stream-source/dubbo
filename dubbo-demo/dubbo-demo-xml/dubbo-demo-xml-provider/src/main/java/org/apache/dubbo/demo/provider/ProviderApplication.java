@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ProviderApplication {
     public static void main(String[] args) throws Exception {
-        providerMainTest();
+        stubTest();
     }
 
     private static void providerMainTest() throws IOException {
@@ -61,6 +61,16 @@ public class ProviderApplication {
         AdaptiveService adaptiveExtension = extensionLoader.getAdaptiveExtension();
         URL url = URL.valueOf("http://localhost/testAdaptive");
         adaptiveExtension.echo("adaptive", url);
+        System.in.read();
+    }
+
+    /**
+     * 服务端Stub测试
+     * @throws IOException
+     */
+    private static void stubTest() throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/stub-provider.xml");
+        context.start();
         System.in.read();
     }
 }
