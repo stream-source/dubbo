@@ -17,6 +17,7 @@
 package org.apache.dubbo.demo.consumer;
 
 import org.apache.dubbo.demo.OrderService;
+import org.apache.dubbo.demo.notify.UserNotifyService;
 import org.apache.dubbo.demo.stub.UserService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -28,7 +29,7 @@ public class ConsumerApplication {
      * launch the application
      */
     public static void main(String[] args) throws Exception {
-        stubTest();
+        notifyTest();
     }
 
     private static void consumerMainTest() throws IOException {
@@ -56,6 +57,14 @@ public class ConsumerApplication {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/stub-consumer.xml");
         UserService stubService = context.getBean(UserService.class);
         String userName = stubService.getUserName("1503891");
+        System.out.println(userName);
+
+    }
+
+    private static void notifyTest() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/notify-consumer.xml");
+        UserNotifyService notifyService = context.getBean(UserNotifyService.class);
+        String userName = notifyService.getUserName("1503892");
         System.out.println(userName);
 
     }
