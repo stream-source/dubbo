@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ProviderApplication {
     public static void main(String[] args) throws Exception {
-        stubTest();
+        notifyTest();
     }
 
     private static void providerMainTest() throws IOException {
@@ -70,6 +70,16 @@ public class ProviderApplication {
      */
     private static void stubTest() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/stub-provider.xml");
+        context.start();
+        System.in.read();
+    }
+
+    /**
+     * 事件通知
+     * @throws IOException
+     */
+    private static void notifyTest() throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/notify-provider.xml");
         context.start();
         System.in.read();
     }
